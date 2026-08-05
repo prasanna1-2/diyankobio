@@ -1,124 +1,303 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ne">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diyan Sharma - Honest Student</title>
+    <meta name="description" content="दियान शर्माको आधिकारिक जीवनी वेबसाइट">
+    <meta name="keywords" content="दियान शर्मा, Biography, विद्यार्थी, Software Engineer">
+    <meta name="author" content="Daku .D.Team">
+
+    <title>दियान शर्मा | जीवनी</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        body {
-            margin: 0;
-            padding: 10px;
-            background: linear-gradient(135deg, #ffffff, #f5f5ff);
-            font-family: Arial, sans-serif;
-        }
 
-        .container {
-            max-width: 500px;
-            width: 100%;
-            background: #f9f9f9;
-            border: 2px solid #ddd;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.12);
-            text-align: center;
-            margin: 20px auto;
-            transition: 0.3s ease;
-        }
+    /* =========
+       PART 2 CSS HERE
+       ========= */
 
-        .container:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 25px rgba(214, 51, 108, 0.25);
-        }
-
-        .profile {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            margin-bottom: 15px;
-            box-shadow: 0 0 25px 6px rgba(255, 0, 221, 0.6);
-            object-fit: cover;
-            border: 4px solid #fff;
-        }
-
-        h1 {
-            color: #d6336c;
-            font-size: 24px;
-            margin-bottom: 20px;
-            text-shadow: 0 0 5px rgba(214, 51, 108, 0.2);
-        }
-
-        p {
-            font-size: 16px;
-            line-height: 1.7;
-            color: #333;
-            text-align: justify;
-            font-weight: bold;
-            font-style: italic;
-            margin-bottom: 15px;
-        }
-
-        .footer {
-            margin-top: 25px;
-            font-size: 14px;
-            color: #555;
-            font-weight: bold;
-            padding-top: 12px;
-            border-top: 1px solid #ddd;
-        }
-
-        .footer a {
-            color: #d6336c;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .footer a:hover {
-            color: #000;
-            text-decoration: underline;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 15px;
-            }
-
-            h1 {
-                font-size: 21px;
-            }
-
-            p {
-                font-size: 15px;
-            }
-        }
     </style>
 </head>
+
 <body>
 
-    <div class="container">
+<!-- ========================= -->
+<!-- Loading Screen -->
+<!-- ========================= -->
 
-        <img src="diyan.png" alt="Diyan Sharma" class="profile">
+<div id="loader">
+    <div class="loader-box">
+        <div class="spinner"></div>
+        <h2>लोड हुँदैछ...</h2>
+    </div>
+</div>
 
-        <h1>Biography of Diyan Sharma</h1>
+<!-- Scroll Progress -->
+<div id="progressBar"></div>
+
+<!-- ========================= -->
+<!-- Header -->
+<!-- ========================= -->
+
+<header id="home">
+
+    <nav id="navbar">
+
+        <div class="logo">
+            दियान शर्मा
+        </div>
+
+        <ul>
+
+            <li>
+                <a href="#home">गृह</a>
+            </li>
+
+            <li>
+                <a href="#biography">जीवनी</a>
+            </li>
+
+            <li>
+                <a href="#education">शिक्षा</a>
+            </li>
+
+            <li>
+                <a href="#interest">रुचिहरू</a>
+            </li>
+
+            <li>
+                <a href="#goal">लक्ष्य</a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+</header>
+
+<!-- ========================= -->
+<!-- Hero -->
+<!-- ========================= -->
+
+<section class="hero reveal">
+
+    <img src="diyan.png" alt="दियान शर्मा" class="profile-image">
+
+    <h1>दियान शर्मा</h1>
+
+    <h3>
+        विद्यार्थी | भविष्यका सफ्टवेयर इन्जिनियर | प्रविधिप्रेमी
+    </h3>
+
+    <div class="hero-buttons">
+
+        <a href="#biography" class="btn">
+            मेरो जीवनी
+        </a>
+
+        <a href="#goal" class="btn btn-outline">
+            मेरो लक्ष्य
+        </a>
+
+    </div>
+
+</section>
+
+<!-- ========================= -->
+<!-- Biography -->
+<!-- ========================= -->
+
+<section id="biography" class="section reveal">
+
+    <h2>दियान शर्माको जीवनी</h2>
+
+    <div class="glass-card">
 
         <p>
-            Diyan Sharma is a hardworking and honest student of New Rising English Secondary School. At just 14 years old, he has shown great dedication, discipline, and sincerity towards his studies and daily life. Diyan is known among his teachers and friends for his humble nature, positive attitude, and helpful behavior. He actively participates in school activities and always gives his best in everything he does, making him a role model for his classmates.
+
+            दियान शर्मा नयाँ राइजिङ इङ्ग्लिस सेकेन्डरी स्कुलमा अध्ययनरत एक मेहनती, अनुशासित र इमानदार विद्यार्थी हुन्। उनी सानै उमेरदेखि अध्ययन, अनुशासन र राम्रो व्यवहारका कारण शिक्षक तथा साथीहरूमाझ परिचित छन्। उनी सबैसँग सम्मानपूर्वक व्यवहार गर्छन् र आवश्यक पर्दा सहयोग गर्न सधैं तयार हुन्छन्।
+
         </p>
+
+        <br>
 
         <p>
-            Diyan has a clear dream of becoming a successful Software Engineer in the future. His curiosity about technology and how computers work drives him to learn new things every day. He is determined to work hard and achieve his goals, and he is grateful to have the full support of his loving family. Their constant encouragement motivates him to keep pushing forward, and with his honesty, dedication, and family support, Diyan is on the right path towards a bright future.
+
+            उनीलाई कम्प्युटर, प्रविधि, नयाँ कुरा सिक्ने तथा सिर्जनात्मक कार्यहरूमा विशेष रुचि छ। विद्यालयका विभिन्न गतिविधिहरूमा सक्रिय सहभागिता जनाउने उनी भविष्यमा सफल सफ्टवेयर इन्जिनियर बन्ने लक्ष्यका साथ निरन्तर मेहनत गरिरहेका छन्।
+
         </p>
 
-        <div class="footer">
-            Created by Daku .D.Team <br><br>
+        <br>
 
-            Creator Website :
-            <a href="https://prasannasapkota.online" target="_blank">
-                prasannasapkota.online
-            </a>
+        <p>
+
+            दियान विश्वास गर्छन् कि निरन्तर अभ्यास, मेहनत, अनुशासन र सकारात्मक सोचले जीवनका ठूला लक्ष्यहरू प्राप्त गर्न सकिन्छ। उनी आफ्ना परिवार, शिक्षक तथा साथीहरूको प्रेरणाबाट आफ्नो भविष्य उज्ज्वल बनाउन प्रतिबद्ध छन्।
+
+        </p>
+
+    </div>
+
+</section>
+
+<!-- ========================= -->
+<!-- Education -->
+<!-- ========================= -->
+
+<section id="education" class="section reveal">
+
+    <h2>शिक्षा</h2>
+
+    <div class="info-grid">
+
+        <div class="glass-card">
+
+            <h3>विद्यालय</h3>
+
+            <p>नयाँ राइजिङ इङ्ग्लिस सेकेन्डरी स्कुल</p>
+
+        </div>
+
+        <div class="glass-card">
+
+            <h3>पेशा</h3>
+
+            <p>विद्यार्थी</p>
+
+        </div>
+
+        <div class="glass-card">
+
+            <h3>रुचि</h3>
+
+            <p>कम्प्युटर, प्रविधि, प्रोग्रामिङ तथा नयाँ ज्ञान सिक्ने</p>
+
         </div>
 
     </div>
 
+</section>
+
+<!-- ========================= -->
+<!-- Interests -->
+<!-- ========================= -->
+
+<section id="interest" class="section reveal">
+
+    <h2>रुचिहरू</h2>
+
+    <div class="card-grid">
+
+        <div class="interest-card">💻 कम्प्युटर</div>
+
+        <div class="interest-card">📚 अध्ययन</div>
+
+        <div class="interest-card">🌐 प्रविधि</div>
+
+        <div class="interest-card">💡 नयाँ कुरा सिक्ने</div>
+
+        <div class="interest-card">🤝 सहयोग गर्ने</div>
+
+        <div class="interest-card">🎯 लक्ष्य निर्धारण</div>
+
+    </div>
+
+</section>
+
+<!-- ========================= -->
+<!-- Goal -->
+<!-- ========================= -->
+
+<section id="goal" class="section reveal">
+
+    <h2>मेरो लक्ष्य</h2>
+
+    <div class="glass-card">
+
+        <p>
+
+            मेरो सपना एक सफल सफ्टवेयर इन्जिनियर बन्ने हो। भविष्यमा प्रविधिको माध्यमबाट समाजका लागि उपयोगी सफ्टवेयर तथा डिजिटल समाधानहरू निर्माण गरी मानिसहरूको जीवनलाई अझ सहज र प्रभावकारी बनाउने मेरो उद्देश्य हो।
+
+        </p>
+
+    </div>
+
+</section>
+
+<!-- ========================= -->
+<!-- Achievement -->
+<!-- ========================= -->
+
+<section class="section reveal">
+
+    <h2>उपलब्धिहरू</h2>
+
+    <div class="progress-card">
+
+        <h3>मेहनत</h3>
+        <div class="progress"><span data-width="95%"></span></div>
+
+        <h3>अनुशासन</h3>
+        <div class="progress"><span data-width="92%"></span></div>
+
+        <h3>सकारात्मक सोच</h3>
+        <div class="progress"><span data-width="90%"></span></div>
+
+        <h3>प्रविधिप्रेम</h3>
+        <div class="progress"><span data-width="98%"></span></div>
+
+    </div>
+
+</section>
+
+<!-- ========================= -->
+<!-- Quote -->
+<!-- ========================= -->
+
+<section class="section reveal">
+
+    <div class="quote-card">
+
+        <h2>प्रेरणादायी भनाइ</h2>
+
+        <blockquote>
+
+            "सफलता भाग्यले होइन, निरन्तर मेहनत, अनुशासन र आत्मविश्वासले प्राप्त हुन्छ।"
+
+        </blockquote>
+
+    </div>
+
+</section>
+
+<!-- ========================= -->
+<!-- Footer -->
+<!-- ========================= -->
+
+<footer>
+
+    <h3>Created by Daku .D.Team</h3>
+
+    <p>Website: prasannasapkota.online</p>
+
+    <p>© 2026 All Rights Reserved</p>
+
+</footer>
+
+<!-- Back To Top -->
+
+<button id="topBtn">
+↑
+</button>
+
+<script>
+
+/* ==========
+PART 3 JavaScript HERE
+========== */
+
+</script>
+
 </body>
-</html>
+            </html>
