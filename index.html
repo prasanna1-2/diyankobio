@@ -391,7 +391,62 @@
           </div>
         </div>
       </div>
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
+// ===== YOUR FIREBASE CONFIG =====
+const firebaseConfig = {
+  apiKey: "AIzaSyBxCJJLsZQtlwPyW3gWvl2dO25-eSpOYEg",
+  authDomain: "https://ff-tournament-app-abcf0-default-rtdb.firebaseio.com",
+  databaseURL: "https://ff-tournament-app-abcf0-default-rtdb.firebaseio.com",
+  projectId: "ff-tournament-app-abcf0",
+  storageBucket: "ff-tournament-app-abcf0.firebasestorage.app",
+  messagingSenderId: "540293861745",
+  appId: "1:1777124189720:web:dakuofficial"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// Elements
+const dot = document.querySelector(".status-dot");
+
+// Create status text
+const statusText = document.createElement("div");
+statusText.style.marginTop = "10px";
+statusText.style.fontSize = "14px";
+statusText.style.fontWeight = "600";
+statusText.style.color = "#22c55e";
+statusText.style.textAlign = "center";
+statusText.innerHTML = "🟢 Online";
+
+document.querySelector(".avatar-wrap").after(statusText);
+
+// Listen for status changes
+onValue(ref(db, "profile/status"), (snapshot) => {
+    const status = snapshot.val();
+
+    if (status === "online") {
+        dot.style.background = "#22c55e";
+        dot.style.boxShadow = "0 0 15px #22c55e";
+        dot.title = "Online";
+
+        statusText.innerHTML = "🟢 Online";
+        statusText.style.color = "#22c55e";
+
+    } else {
+        dot.style.background = "#ef4444";
+        dot.style.boxShadow = "0 0 15px #ef4444";
+        dot.title = "Offline";
+
+        statusText.innerHTML = "🔴 Offline";
+        statusText.style.color = "#ef4444";
+    }
+});
+</script>
       <div class="row goal-row">
         <div class="icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
