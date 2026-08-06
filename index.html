@@ -1,303 +1,430 @@
 <!DOCTYPE html>
 <html lang="ne">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="दियान शर्माको आधिकारिक जीवनी वेबसाइट">
-    <meta name="keywords" content="दियान शर्मा, Biography, विद्यार्थी, Software Engineer">
-    <meta name="author" content="Daku .D.Team">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>दियान शर्मा | प्रोफाइल</title>
+<meta name="description" content="दियान शर्मा — विद्यार्थी, भविष्यको सफ्टवेयर इन्जिनियर">
 
-    <title>दियान शर्मा | जीवनी</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#05070d;
+    --bg-1:#0b0f1e;
+    --bg-2:#121935;
+    --glass:rgba(255,255,255,0.055);
+    --glass-strong:rgba(255,255,255,0.09);
+    --glass-border:rgba(255,255,255,0.14);
+    --violet:#7c5cff;
+    --violet-soft:#a78bfa;
+    --cyan:#2fd4e0;
+    --text-hi:#f1f3fb;
+    --text-mid:#c3c9e0;
+    --text-low:#8991ae;
+    --radius-xl: 28px;
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --ease: cubic-bezier(.22,1,.36,1);
+  }
 
-    <style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
 
-    /* =========
-       PART 2 CSS HERE
-       ========= */
+  html{ -webkit-text-size-adjust:100%; }
 
-    </style>
+  body{
+    min-height:100svh;
+    font-family:'Noto Sans Devanagari','Inter',system-ui,sans-serif;
+    color:var(--text-hi);
+    background:var(--bg-0);
+    overflow-x:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px 18px;
+    position:relative;
+  }
+
+  /* ---------- Animated background ---------- */
+  .bg{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    overflow:hidden;
+    background:
+      radial-gradient(1200px 800px at 50% -10%, #0e1430 0%, var(--bg-0) 55%),
+      linear-gradient(180deg, var(--bg-0), var(--bg-1) 55%, var(--bg-0));
+  }
+  .blob{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(90px);
+    opacity:0.55;
+    will-change:transform;
+  }
+  .blob--a{
+    width:46vmax; height:46vmax;
+    left:-14vmax; top:-16vmax;
+    background:radial-gradient(circle at 30% 30%, var(--violet), transparent 70%);
+    animation: drift1 26s ease-in-out infinite;
+  }
+  .blob--b{
+    width:40vmax; height:40vmax;
+    right:-12vmax; top:6vmax;
+    background:radial-gradient(circle at 60% 40%, var(--cyan), transparent 70%);
+    animation: drift2 32s ease-in-out infinite;
+  }
+  .blob--c{
+    width:38vmax; height:38vmax;
+    left:8vmax; bottom:-18vmax;
+    background:radial-gradient(circle at 50% 50%, #3b2e9e, transparent 70%);
+    animation: drift3 30s ease-in-out infinite;
+  }
+  @keyframes drift1{
+    0%,100%{ transform: translate(0,0) scale(1); }
+    50%{ transform: translate(6vmax, 8vmax) scale(1.12); }
+  }
+  @keyframes drift2{
+    0%,100%{ transform: translate(0,0) scale(1); }
+    50%{ transform: translate(-7vmax, 5vmax) scale(1.08); }
+  }
+  @keyframes drift3{
+    0%,100%{ transform: translate(0,0) scale(1); }
+    50%{ transform: translate(4vmax, -6vmax) scale(1.15); }
+  }
+
+  .grain{
+    position:fixed; inset:0; z-index:1; pointer-events:none;
+    opacity:0.035; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- Card ---------- */
+  .card{
+    position:relative;
+    z-index:2;
+    width:100%;
+    max-width:420px;
+    background:linear-gradient(180deg, var(--glass-strong), var(--glass));
+    backdrop-filter:blur(22px) saturate(140%);
+    -webkit-backdrop-filter:blur(22px) saturate(140%);
+    border:1px solid var(--glass-border);
+    border-radius:var(--radius-xl);
+    padding:44px 30px 32px;
+    box-shadow:
+      0 30px 80px -20px rgba(0,0,0,0.65),
+      0 0 0 1px rgba(255,255,255,0.02) inset,
+      0 1px 0 rgba(255,255,255,0.08) inset;
+    text-align:center;
+    animation: rise .8s var(--ease) both;
+  }
+  @keyframes rise{
+    from{ opacity:0; transform: translateY(24px) scale(.98); }
+    to{ opacity:1; transform:translateY(0) scale(1); }
+  }
+
+  /* ---------- Avatar ---------- */
+  .avatar-wrap{
+    position:relative;
+    width:132px; height:132px;
+    margin:0 auto 22px;
+  }
+  .avatar-ring{
+    position:absolute; inset:-8px;
+    border-radius:50%;
+    background:conic-gradient(from 0deg, var(--violet), var(--cyan), var(--violet-soft), var(--violet));
+    animation: spin 7s linear infinite;
+    filter:blur(0.3px);
+  }
+  .avatar-ring::after{
+    content:"";
+    position:absolute; inset:3px;
+    border-radius:50%;
+    background:var(--bg-1);
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .avatar{
+    position:absolute; inset:8px;
+    border-radius:50%;
+    overflow:hidden;
+    background:linear-gradient(145deg,#1b2140,#0d1226);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 26px rgba(0,0,0,0.5);
+  }
+  .avatar img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  .avatar-fallback{
+    font-family:'Baloo 2', sans-serif;
+    font-size:40px; font-weight:700;
+    color:var(--text-hi);
+    background:linear-gradient(135deg, var(--violet), var(--cyan));
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .status-dot{
+    position:absolute;
+    bottom:6px; right:6px;
+    width:18px; height:18px;
+    border-radius:50%;
+    background:#3ee08a;
+    border:3px solid var(--bg-1);
+    box-shadow:0 0 10px 1px rgba(62,224,138,.7);
+  }
+
+  /* ---------- Text ---------- */
+  .name{
+    font-family:'Baloo 2', 'Noto Sans Devanagari', sans-serif;
+    font-size:clamp(26px, 6vw, 30px);
+    font-weight:700;
+    letter-spacing:.2px;
+    background:linear-gradient(120deg, #ffffff, var(--violet-soft) 55%, var(--cyan));
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+
+  .tagline{
+    margin-top:8px;
+    font-size:13.5px;
+    color:var(--text-low);
+    letter-spacing:.3px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+  }
+  .tagline .dot{
+    width:5px; height:5px; border-radius:50%;
+    background:var(--cyan);
+    box-shadow:0 0 8px var(--cyan);
+  }
+
+  /* ---------- Details ---------- */
+  .details{
+    margin-top:28px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    text-align:left;
+  }
+
+  .row{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    background:rgba(255,255,255,0.035);
+    border:1px solid rgba(255,255,255,0.07);
+    border-radius:var(--radius-md);
+    padding:14px 16px;
+    transition:transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .row:hover, .row:focus-within{
+    transform:translateY(-3px);
+    background:rgba(255,255,255,0.065);
+    border-color:rgba(255,255,255,0.16);
+    box-shadow:0 14px 30px -12px rgba(0,0,0,.55);
+  }
+
+  .icon{
+    flex:0 0 auto;
+    width:38px; height:38px;
+    border-radius:11px;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(145deg, rgba(124,92,255,.22), rgba(47,212,224,.16));
+    border:1px solid rgba(255,255,255,.08);
+  }
+  .icon svg{ width:19px; height:19px; stroke:var(--cyan); }
+
+  .row-text{ flex:1; min-width:0; }
+  .label{
+    font-size:11.5px;
+    color:var(--text-low);
+    letter-spacing:.4px;
+    margin-bottom:3px;
+  }
+  .value{
+    font-size:14.5px;
+    color:var(--text-hi);
+    font-weight:500;
+    line-height:1.45;
+  }
+
+  /* chips for रुचि */
+  .chips{
+    display:flex; flex-wrap:wrap; gap:7px; margin-top:6px;
+  }
+  .chip{
+    font-size:12px;
+    padding:5px 11px;
+    border-radius:999px;
+    background:rgba(124,92,255,.14);
+    border:1px solid rgba(124,92,255,.3);
+    color:var(--violet-soft);
+    white-space:nowrap;
+  }
+  .chip:nth-child(2){
+    background:rgba(47,212,224,.12);
+    border-color:rgba(47,212,224,.3);
+    color:var(--cyan);
+  }
+  .chip:nth-child(3){
+    background:rgba(255,255,255,.06);
+    border-color:rgba(255,255,255,.16);
+    color:var(--text-mid);
+  }
+
+  /* goal highlight */
+  .goal-row{
+    background:linear-gradient(135deg, rgba(124,92,255,.14), rgba(47,212,224,.08));
+    border-color:rgba(124,92,255,.28);
+  }
+  .goal-row .value{ font-weight:600; }
+  .quote-mark{
+    font-family:'Baloo 2', serif;
+    font-size:22px;
+    color:var(--violet-soft);
+    line-height:0;
+    margin-inline-end:2px;
+    vertical-align:-2px;
+    opacity:.8;
+  }
+
+  /* ---------- Footer ---------- */
+  .footer{
+    margin-top:26px;
+    padding-top:18px;
+    border-top:1px dashed rgba(255,255,255,.12);
+    font-size:12px;
+    color:var(--text-low);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    letter-spacing:.3px;
+  }
+  .footer .code{
+    font-family:monospace;
+    color:var(--cyan);
+    opacity:.85;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:420px){
+    .card{ padding:36px 20px 26px; border-radius:22px; }
+    .avatar-wrap{ width:112px; height:112px; }
+  }
+
+  @media (min-width:640px){
+    .card{ padding:52px 40px 38px; }
+  }
+
+  /* Focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--cyan);
+    outline-offset:3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+</style>
 </head>
-
 <body>
 
-<!-- ========================= -->
-<!-- Loading Screen -->
-<!-- ========================= -->
+  <div class="bg" aria-hidden="true">
+    <div class="blob blob--a"></div>
+    <div class="blob blob--b"></div>
+    <div class="blob blob--c"></div>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
 
-<div id="loader">
-    <div class="loader-box">
-        <div class="spinner"></div>
-        <h2>लोड हुँदैछ...</h2>
+  <main class="card" role="main" aria-label="दियान शर्माको प्रोफाइल">
+
+    <div class="avatar-wrap">
+      <div class="avatar-ring"></div>
+      <div class="avatar" id="avatarBox">
+        <img id="avatarImg" src="diyan.png" alt="दियान शर्मा" loading="lazy">
+      </div>
+      <span class="status-dot" title="सक्रिय"></span>
     </div>
-</div>
 
-<!-- Scroll Progress -->
-<div id="progressBar"></div>
+    <h1 class="name">दियान शर्मा</h1>
+    <p class="tagline"><span class="dot"></span> भविष्यको सफ्टवेयर इन्जिनियर</p>
 
-<!-- ========================= -->
-<!-- Header -->
-<!-- ========================= -->
+    <section class="details">
 
-<header id="home">
-
-    <nav id="navbar">
-
-        <div class="logo">
-            दियान शर्मा
+      <div class="row">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
         </div>
-
-        <ul>
-
-            <li>
-                <a href="#home">गृह</a>
-            </li>
-
-            <li>
-                <a href="#biography">जीवनी</a>
-            </li>
-
-            <li>
-                <a href="#education">शिक्षा</a>
-            </li>
-
-            <li>
-                <a href="#interest">रुचिहरू</a>
-            </li>
-
-            <li>
-                <a href="#goal">लक्ष्य</a>
-            </li>
-
-        </ul>
-
-    </nav>
-
-</header>
-
-<!-- ========================= -->
-<!-- Hero -->
-<!-- ========================= -->
-
-<section class="hero reveal">
-
-    <img src="diyan.png" alt="दियान शर्मा" class="profile-image">
-
-    <h1>दियान शर्मा</h1>
-
-    <h3>
-        विद्यार्थी | भविष्यका सफ्टवेयर इन्जिनियर | प्रविधिप्रेमी
-    </h3>
-
-    <div class="hero-buttons">
-
-        <a href="#biography" class="btn">
-            मेरो जीवनी
-        </a>
-
-        <a href="#goal" class="btn btn-outline">
-            मेरो लक्ष्य
-        </a>
-
-    </div>
-
-</section>
-
-<!-- ========================= -->
-<!-- Biography -->
-<!-- ========================= -->
-
-<section id="biography" class="section reveal">
-
-    <h2>दियान शर्माको जीवनी</h2>
-
-    <div class="glass-card">
-
-        <p>
-
-            दियान शर्मा नयाँ राइजिङ इङ्ग्लिस सेकेन्डरी स्कुलमा अध्ययनरत एक मेहनती, अनुशासित र इमानदार विद्यार्थी हुन्। उनी सानै उमेरदेखि अध्ययन, अनुशासन र राम्रो व्यवहारका कारण शिक्षक तथा साथीहरूमाझ परिचित छन्। उनी सबैसँग सम्मानपूर्वक व्यवहार गर्छन् र आवश्यक पर्दा सहयोग गर्न सधैं तयार हुन्छन्।
-
-        </p>
-
-        <br>
-
-        <p>
-
-            उनीलाई कम्प्युटर, प्रविधि, नयाँ कुरा सिक्ने तथा सिर्जनात्मक कार्यहरूमा विशेष रुचि छ। विद्यालयका विभिन्न गतिविधिहरूमा सक्रिय सहभागिता जनाउने उनी भविष्यमा सफल सफ्टवेयर इन्जिनियर बन्ने लक्ष्यका साथ निरन्तर मेहनत गरिरहेका छन्।
-
-        </p>
-
-        <br>
-
-        <p>
-
-            दियान विश्वास गर्छन् कि निरन्तर अभ्यास, मेहनत, अनुशासन र सकारात्मक सोचले जीवनका ठूला लक्ष्यहरू प्राप्त गर्न सकिन्छ। उनी आफ्ना परिवार, शिक्षक तथा साथीहरूको प्रेरणाबाट आफ्नो भविष्य उज्ज्वल बनाउन प्रतिबद्ध छन्।
-
-        </p>
-
-    </div>
-
-</section>
-
-<!-- ========================= -->
-<!-- Education -->
-<!-- ========================= -->
-
-<section id="education" class="section reveal">
-
-    <h2>शिक्षा</h2>
-
-    <div class="info-grid">
-
-        <div class="glass-card">
-
-            <h3>विद्यालय</h3>
-
-            <p>नयाँ राइजिङ इङ्ग्लिस सेकेन्डरी स्कुल</p>
-
+        <div class="row-text">
+          <div class="label">पेशा</div>
+          <div class="value">विद्यार्थी</div>
         </div>
+      </div>
 
-        <div class="glass-card">
-
-            <h3>पेशा</h3>
-
-            <p>विद्यार्थी</p>
-
+      <div class="row">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/></svg>
         </div>
-
-        <div class="glass-card">
-
-            <h3>रुचि</h3>
-
-            <p>कम्प्युटर, प्रविधि, प्रोग्रामिङ तथा नयाँ ज्ञान सिक्ने</p>
-
+        <div class="row-text">
+          <div class="label">विद्यालय</div>
+          <div class="value">नयाँ राइजिङ इङ्ग्लिस सेकेन्डरी स्कुल</div>
         </div>
+      </div>
 
+      <div class="row">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/><rect x="8" y="8" width="8" height="8" rx="1"/></svg>
+        </div>
+        <div class="row-text">
+          <div class="label">रुचि</div>
+          <div class="chips">
+            <span class="chip">कम्प्युटर</span>
+            <span class="chip">प्रविधि</span>
+            <span class="chip">नयाँ कुरा सिक्ने</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row goal-row">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
+        </div>
+        <div class="row-text">
+          <div class="label">लक्ष्य</div>
+          <div class="value"><span class="quote-mark">“</span>भविष्यमा सफल सफ्टवेयर इन्जिनियर बन्ने</div>
+        </div>
+      </div>
+
+    </section>
+
+    <div class="footer">
+      <span class="code">&lt;/&gt;</span>
+      <span>सिक्दै, बढ्दै, निर्माण गर्दै</span>
     </div>
 
-</section>
+  </main>
 
-<!-- ========================= -->
-<!-- Interests -->
-<!-- ========================= -->
-
-<section id="interest" class="section reveal">
-
-    <h2>रुचिहरू</h2>
-
-    <div class="card-grid">
-
-        <div class="interest-card">💻 कम्प्युटर</div>
-
-        <div class="interest-card">📚 अध्ययन</div>
-
-        <div class="interest-card">🌐 प्रविधि</div>
-
-        <div class="interest-card">💡 नयाँ कुरा सिक्ने</div>
-
-        <div class="interest-card">🤝 सहयोग गर्ने</div>
-
-        <div class="interest-card">🎯 लक्ष्य निर्धारण</div>
-
-    </div>
-
-</section>
-
-<!-- ========================= -->
-<!-- Goal -->
-<!-- ========================= -->
-
-<section id="goal" class="section reveal">
-
-    <h2>मेरो लक्ष्य</h2>
-
-    <div class="glass-card">
-
-        <p>
-
-            मेरो सपना एक सफल सफ्टवेयर इन्जिनियर बन्ने हो। भविष्यमा प्रविधिको माध्यमबाट समाजका लागि उपयोगी सफ्टवेयर तथा डिजिटल समाधानहरू निर्माण गरी मानिसहरूको जीवनलाई अझ सहज र प्रभावकारी बनाउने मेरो उद्देश्य हो।
-
-        </p>
-
-    </div>
-
-</section>
-
-<!-- ========================= -->
-<!-- Achievement -->
-<!-- ========================= -->
-
-<section class="section reveal">
-
-    <h2>उपलब्धिहरू</h2>
-
-    <div class="progress-card">
-
-        <h3>मेहनत</h3>
-        <div class="progress"><span data-width="95%"></span></div>
-
-        <h3>अनुशासन</h3>
-        <div class="progress"><span data-width="92%"></span></div>
-
-        <h3>सकारात्मक सोच</h3>
-        <div class="progress"><span data-width="90%"></span></div>
-
-        <h3>प्रविधिप्रेम</h3>
-        <div class="progress"><span data-width="98%"></span></div>
-
-    </div>
-
-</section>
-
-<!-- ========================= -->
-<!-- Quote -->
-<!-- ========================= -->
-
-<section class="section reveal">
-
-    <div class="quote-card">
-
-        <h2>प्रेरणादायी भनाइ</h2>
-
-        <blockquote>
-
-            "सफलता भाग्यले होइन, निरन्तर मेहनत, अनुशासन र आत्मविश्वासले प्राप्त हुन्छ।"
-
-        </blockquote>
-
-    </div>
-
-</section>
-
-<!-- ========================= -->
-<!-- Footer -->
-<!-- ========================= -->
-
-<footer>
-
-    <h3>Created by Daku .D.Team</h3>
-
-    <p>Website: prasannasapkota.online</p>
-
-    <p>© 2026 All Rights Reserved</p>
-
-</footer>
-
-<!-- Back To Top -->
-
-<button id="topBtn">
-↑
-</button>
-
-<script>
-
-/* ==========
-PART 3 JavaScript HERE
-========== */
-
-</script>
+  <script>
+    // Graceful fallback avatar if diyan.png is missing
+    (function(){
+      const img = document.getElementById('avatarImg');
+      const box = document.getElementById('avatarBox');
+      img.addEventListener('error', function(){
+        img.remove();
+        const span = document.createElement('span');
+        span.className = 'avatar-fallback';
+        span.textContent = 'दि';
+        box.appendChild(span);
+      }, { once:true });
+    })();
+  </script>
 
 </body>
-            </html>
+    </html>
