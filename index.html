@@ -40,58 +40,157 @@ body.offline{
 /* STATUS */
 .status-box{
     position:fixed;
-    top:10px;
-    right:10px;
-    padding:8px 14px;
+    top:14px;
+    right:14px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:8px 16px 8px 12px;
     border-radius:50px;
-    font-weight:800;
-    font-size:13px;
-    background:rgba(0,0,0,0.6);
-    backdrop-filter:blur(10px);
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:0.4px;
+    background:rgba(15,15,15,0.55);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
     z-index:999;
-    transition:0.3s;
+    transition:0.35s ease;
+    border:1px solid rgba(255,255,255,0.1);
+    box-shadow:0 4px 18px rgba(0,0,0,0.35);
+}
+
+.status-box .dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    flex-shrink:0;
 }
 
 .online .status-box{
-    color:#00ff66;
-    border:1px solid #00ff66;
+    color:#7CFFA6;
+    border-color:rgba(0,255,102,0.35);
+}
+
+.online .status-box .dot{
+    background:#00ff66;
+    box-shadow:0 0 8px #00ff66,0 0 16px rgba(0,255,102,0.6);
+    animation:blink 2s ease-in-out infinite;
 }
 
 .offline .status-box{
-    color:#ff3b3b;
-    border:1px solid #ff3b3b;
+    color:#ff8080;
+    border-color:rgba(255,59,59,0.35);
+}
+
+.offline .status-box .dot{
+    background:#ff3b3b;
+    box-shadow:0 0 8px #ff3b3b,0 0 16px rgba(255,59,59,0.5);
+}
+
+@keyframes blink{
+    0%,100%{ opacity:1; }
+    50%{ opacity:0.45; }
+}
+
+/* STATUS DOT ON PROFILE FRAME */
+.frame-status{
+    position:absolute;
+    bottom:6px;
+    right:6px;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    border:3px solid #030303;
+    z-index:3;
+    transition:0.35s ease;
+}
+
+.online .frame-status{
+    background:#00ff66;
+    box-shadow:0 0 10px #00ff66;
+}
+
+.offline .frame-status{
+    background:#ff3b3b;
+    box-shadow:0 0 10px #ff3b3b;
 }
 
 /* MUSIC */
 .music-bar{
     position:fixed;
-    top:10px;
-    left:10px;
-    padding:8px 12px;
+    top:14px;
+    left:14px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 16px 8px 12px;
     border-radius:50px;
     cursor:pointer;
-    background:rgba(0,0,0,0.6);
-    backdrop-filter:blur(10px);
+    background:rgba(15,15,15,0.55);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
     z-index:999;
-    font-size:13px;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.4px;
     user-select:none;
-    transition:0.3s;
-    border:1px solid rgba(255,255,255,0.15);
+    transition:0.35s ease;
+    border:1px solid rgba(255,255,255,0.1);
+    box-shadow:0 4px 18px rgba(0,0,0,0.35);
+    color:#ddd;
 }
 
 .music-bar:hover{
     background:rgba(255,255,255,0.1);
+    transform:translateY(-1px);
+}
+
+.music-bar i{
+    font-size:13px;
+    color:#aaa;
+    transition:0.3s;
 }
 
 .music-bar.playing{
-    animation:pulse 1.5s infinite;
-    border-color:#00ff66;
+    border-color:rgba(0,255,102,0.4);
+    color:#7CFFA6;
 }
 
-@keyframes pulse{
-    0%{ box-shadow:0 0 0 rgba(0,255,100,0.4); }
-    50%{ box-shadow:0 0 12px rgba(0,255,100,0.6); }
-    100%{ box-shadow:0 0 0 rgba(0,255,100,0.4); }
+.music-bar.playing i{
+    color:#00ff66;
+}
+
+/* equalizer bars, shown only while playing */
+.eq{
+    display:none;
+    align-items:flex-end;
+    gap:2px;
+    height:12px;
+}
+
+.music-bar.playing .eq{
+    display:flex;
+}
+
+.music-bar.playing i.fa-music{
+    display:none;
+}
+
+.eq span{
+    width:3px;
+    background:#00ff66;
+    border-radius:2px;
+    animation:eq 0.9s ease-in-out infinite;
+}
+
+.eq span:nth-child(1){ height:40%; animation-delay:0s; }
+.eq span:nth-child(2){ height:100%; animation-delay:0.2s; }
+.eq span:nth-child(3){ height:65%; animation-delay:0.4s; }
+.eq span:nth-child(4){ height:85%; animation-delay:0.1s; }
+
+@keyframes eq{
+    0%,100%{ transform:scaleY(0.4); }
+    50%{ transform:scaleY(1); }
 }
 
 /* MAIN */
@@ -240,13 +339,17 @@ body.offline{
 <body>
 
 <!-- MUSIC -->
-<div class="music-bar" id="musicBar" onclick="toggleMusic()">🎵 MUSIC</div>
+<div class="music-bar" id="musicBar" onclick="toggleMusic()">
+    <i class="fa-solid fa-music"></i>
+    <div class="eq"><span></span><span></span><span></span><span></span></div>
+    <span id="musicLabel">MUSIC</span>
+</div>
 <audio id="music" preload="none" loop>
     <!-- Add your own track: <source src="diyan.mp3" type="audio/mpeg"> -->
 </audio>
 
 <!-- STATUS -->
-<div id="status" class="status-box">LOADING...</div>
+<div id="status" class="status-box"><span class="dot"></span><span id="statusLabel">LOADING...</span></div>
 
 <!-- POPUP (fixed, single instance) -->
 <div class="popup" id="popup">👋 Hey, thanks for visiting!</div>
@@ -257,6 +360,7 @@ body.offline{
 
         <div class="profile-frame">
             <img src="diyan.png" alt="Diyan Sharma profile photo">
+            <span class="frame-status" id="frameStatus" title="Online status"></span>
         </div>
 
         <div class="name-row">
@@ -296,7 +400,15 @@ const firebaseConfig = {
     projectId: "ff-tournament-app-abcf0"
 };
 
-const statusEl = document.getElementById("status");
+const statusLabel = document.getElementById("statusLabel");
+const frameStatus = document.getElementById("frameStatus");
+
+function setStatus(isOnline) {
+    document.body.classList.remove("online", "offline");
+    document.body.classList.add(isOnline ? "online" : "offline");
+    statusLabel.innerText = isOnline ? "ONLINE" : "OFFLINE";
+    if (frameStatus) frameStatus.title = isOnline ? "Online now" : "Offline";
+}
 
 try {
     firebase.initializeApp(firebaseConfig);
@@ -304,34 +416,31 @@ try {
 
     db.ref("status").on("value", snap => {
         const val = snap.val() || "offline";
-        document.body.classList.remove("online", "offline");
-        if (val === "online") {
-            document.body.classList.add("online");
-            statusEl.innerText = "● ONLINE";
-        } else {
-            document.body.classList.add("offline");
-            statusEl.innerText = "● OFFLINE";
-        }
+        setStatus(val === "online");
     }, error => {
         console.error("Firebase read error:", error);
-        document.body.classList.add("offline");
-        statusEl.innerText = "● OFFLINE";
+        setStatus(false);
     });
 } catch (err) {
     console.error("Firebase init error:", err);
-    document.body.classList.add("offline");
-    statusEl.innerText = "● OFFLINE";
+    setStatus(false);
 }
 
 /* MUSIC */
 const music = document.getElementById("music");
 const musicBar = document.getElementById("musicBar");
+const musicLabel = document.getElementById("musicLabel");
 let playing = false;
 
+function hasTrack() {
+    return !!(music.querySelector("source") || music.getAttribute("src"));
+}
+
 function toggleMusic() {
-    if (!music.querySelector("source") && !music.src) {
-        musicBar.innerHTML = "🎵 No track set";
-        setTimeout(() => musicBar.innerHTML = "🎵 MUSIC", 1500);
+    if (!hasTrack()) {
+        const original = musicLabel.innerText;
+        musicLabel.innerText = "No track set";
+        setTimeout(() => musicLabel.innerText = original, 1500);
         return;
     }
     if (playing) {
@@ -339,14 +448,16 @@ function toggleMusic() {
         music.currentTime = 0;
         playing = false;
         musicBar.classList.remove("playing");
-        musicBar.innerHTML = "🎵 MUSIC";
+        musicLabel.innerText = "MUSIC";
     } else {
         music.play().then(() => {
             playing = true;
             musicBar.classList.add("playing");
-            musicBar.innerHTML = "🎵 PLAYING";
+            musicLabel.innerText = "PLAYING";
         }).catch(err => {
             console.error("Music Error:", err);
+            musicLabel.innerText = "Tap failed";
+            setTimeout(() => musicLabel.innerText = "MUSIC", 1500);
         });
     }
 }
@@ -354,7 +465,7 @@ function toggleMusic() {
 music.addEventListener("ended", () => {
     playing = false;
     musicBar.classList.remove("playing");
-    musicBar.innerHTML = "🎵 MUSIC";
+    musicLabel.innerText = "MUSIC";
 });
 
 /* POPUP */
@@ -365,4 +476,4 @@ document.querySelector(".profile-frame").onclick = () => {
 };
 </script>
 </body>
-</html>
+    </html>
