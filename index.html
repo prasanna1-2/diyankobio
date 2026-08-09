@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diyan Sharma</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<style>
+
+/* 🔥 NO WHITE SCREEN FIX */
+html,body{
+    margin:0;
+    padding:0;
+    background:#030303;
+    font-family:'Outfit',sans-serif;
+    color:white;
+    min-height:100vh;
+}
+
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    transition:0.4s ease;
+    overflow-x:hidden;
+}
+
+/* THEMES */
+body.online{
+    background:radial-gradient(circle at top,#0a2a10,#000);
+}
+
+body.offline{
+    background:radial-gradient(circle at top,#2a0a0a,#000);
+}
+
+/* STATUS */
+.status-box{
+    position:fixed;
+    top:14px;
+    right:14px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:8px 16px 8px 12px;
+    border-radius:50px;
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:0.4px;
+    background:rgba(15,15,15,0.55);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    z-index:999;
+    transition:0.35s ease;
+    border:1px solid rgba(255,255,255,0.1);
+    box-shadow:0 4px 18px rgba(0,0,0,0.35);
+}
+
+.status-box .dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    flex-shrink:0;
+}
+
+.online .status-box{
+    color:#7CFFA6;
+    border-color:rgba(0,255,102,0.35);
+}
+
+.online .status-box .dot{
+    background:#00ff66;
+    box-shadow:0 0 8px #00ff66,0 0 16px rgba(0,255,102,0.6);
+    animation:blink 2s ease-in-out infinite;
+}
+
+.offline .status-box{
+    color:#ff8080;
+    border-color:rgba(255,59,59,0.35);
+}
+
+.offline .status-box .dot{
+    background:#ff3b3b;
+    box-shadow:0 0 8px #ff3b3b,0 0 16px rgba(255,59,59,0.5);
+}
+
+@keyframes blink{
+    0%,100%{ opacity:1; }
+    50%{ opacity:0.45; }
+}
+
+/* STATUS DOT ON PROFILE FRAME */
+.frame-status{
+    position:absolute;
+    bottom:6px;
+    right:6px;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    border:3px solid #030303;
+    z-index:3;
+    transition:0.35s ease;
+}
+
+.online .frame-status{
+    background:#00ff66;
+    box-shadow:0 0 10px #00ff66;
+}
+
+.offline .frame-status{
+    background:#ff3b3b;
+    box-shadow:0 0 10px #ff3b3b;
+}
+
+/* MUSIC */
+.music-bar{
+    position:fixed;
+    top:14px;
+    left:14px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 16px 8px 12px;
+    border-radius:50px;
+    cursor:pointer;
+    background:rgba(15,15,15,0.55);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    z-index:999;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.4px;
+    user-select:none;
+    transition:0.35s ease;
+    border:1px solid rgba(255,255,255,0.1);
+    box-shadow:0 4px 18px rgba(0,0,0,0.35);
+    color:#ddd;
+}
+
+.music-bar:hover{
+    background:rgba(255,255,255,0.1);
+    transform:translateY(-1px);
+}
+
+.music-bar i{
+    font-size:13px;
+    color:#aaa;
+    transition:0.3s;
+}
+
+.music-bar.playing{
+    border-color:rgba(0,255,102,0.4);
+    color:#7CFFA6;
+}
+
+.music-bar.playing i{
+    color:#00ff66;
+}
+
+/* equalizer bars, shown only while playing */
+.eq{
+    display:none;
+    align-items:flex-end;
+    gap:2px;
+    height:12px;
+}
+
+.music-bar.playing .eq{
+    display:flex;
+}
+
+.music-bar.playing i.fa-music{
+    display:none;
+}
+
+.eq span{
+    width:3px;
+    background:#00ff66;
+    border-radius:2px;
+    animation:eq 0.9s ease-in-out infinite;
+}
+
+.eq span:nth-child(1){ height:40%; animation-delay:0s; }
+.eq span:nth-child(2){ height:100%; animation-delay:0.2s; }
+.eq span:nth-child(3){ height:65%; animation-delay:0.4s; }
+.eq span:nth-child(4){ height:85%; animation-delay:0.1s; }
+
+@keyframes eq{
+    0%,100%{ transform:scaleY(0.4); }
+    50%{ transform:scaleY(1); }
+}
+
+/* MAIN */
+.container{
+    width:100%;
+    max-width:460px;
+    padding:15px;
+    text-align:center;
+    z-index:2;
+}
+
+/* CARD */
+.card{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.1);
+    padding:30px 25px;
+    border-radius:22px;
+    backdrop-filter:blur(12px);
+}
+
+/* PROFILE FRAME */
+.profile-frame{
+    width:140px;
+    height:140px;
+    margin:auto;
+    border-radius:50%;
+    padding:4px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:0.3s;
+    cursor:pointer;
+    position:relative;
+}
+
+.profile-frame:hover{
+    transform:scale(1.03);
+}
+
+.online .profile-frame{
+    border:3px solid #00ff66;
+    box-shadow:0 0 25px rgba(0,255,100,0.5);
+}
+
+.offline .profile-frame{
+    border:3px solid #ff3b3b;
+    box-shadow:0 0 25px rgba(255,0,0,0.4);
+}
+
+.profile-frame img{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+    object-position:center top;
+}
+
+/* NAME + BADGE */
+.name-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    margin-top:14px;
+}
+
+.name{
+    font-size:22px;
+    font-weight:800;
+}
+
+.verified-badge{
+    flex-shrink:0;
+}
+
+.tagline{
+    font-size:13px;
+    opacity:0.8;
+    margin-top:4px;
+}
+
+/* ABOUT */
+.about{
+    font-size:14px;
+    opacity:0.85;
+    margin-top:14px;
+    line-height:1.5;
+}
+
+/* SOCIAL */
+.social{
+    margin-top:20px;
+}
+
+.social a{
+    font-size:24px;
+    margin:0 10px;
+    color:gray;
+    transition:0.3s;
+    display:inline-block;
+}
+
+.social a:hover{
+    color:white;
+    transform:translateY(-2px);
+}
+
+/* HELP */
+.help-btn{
+    position:fixed;
+    bottom:15px;
+    right:15px;
+    padding:12px 16px;
+    border:none;
+    border-radius:50px;
+    font-weight:900;
+    cursor:pointer;
+    z-index:999;
+}
+
+.online .help-btn{ background:#00ff66; color:black; }
+.offline .help-btn{ background:#ff3b3b; color:white; }
+
+/* POPUP */
+.popup{
+    position:fixed;
+    bottom:90px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#111;
+    border:1px solid rgba(255,255,255,0.15);
+    padding:10px 18px;
+    border-radius:12px;
+    opacity:0;
+    pointer-events:none;
+    transition:0.3s;
+    font-size:13px;
+    z-index:999;
+    white-space:nowrap;
+}
+
+.popup.show{ opacity:1; }
+
+</style>
+</head>
+<body>
+
+<!-- MUSIC -->
+<div class="music-bar" id="musicBar" onclick="toggleMusic()">
+    <i class="fa-solid fa-music"></i>
+    <div class="eq"><span></span><span></span><span></span><span></span></div>
+    <span id="musicLabel">MUSIC</span>
+</div>
+<audio id="music" preload="none" loop>
+    <source src="diyan.mp3" type="audio/mpeg">
+</audio>
+
+<!-- STATUS -->
+<div id="status" class="status-box"><span class="dot"></span><span id="statusLabel">LOADING...</span></div>
+
+<div id="popup" class="popup"><i class="fa-solid fa-circle-check"></i> DAKU-VERIFIED</div>
+<!-- MAIN -->
+<div class="container">
+    <div class="card">
+
+      <div class="profile-frame">
+            <img src="diyan.png" alt="Diyan Sharma profile photo">
+            <span class="frame-status" id="frameStatus" title="Online status"></span>
+        </div>
+
+        <div class="name-row">
+            <span class="name">Diyan Sharma</span>
+            <svg class="verified-badge" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                <path d="M12 1l2.6 2.2 3.4-.5 1 3.3 3.2 1.4-.8 3.4 2 2.9-2.5 2.3.6 3.4-3.4.4-1.6 3-3.1-1.3-3.1 1.3-1.6-3-3.4-.4.6-3.4-2.5-2.3 2-2.9-.8-3.4 3.2-1.4 1-3.3 3.4.5z" fill="#ff2b2b"/>
+                <path d="M10.2 15.2L6.9 11.9L5.5 13.3L10.2 18L18.5 9.7L17.1 8.3Z" fill="white"/>
+            </svg>
+        </div>
+
+        <div class="tagline">Future Software Engeener • Grade 9</div>
+
+        <div class="about">
+            I am Diyan Sharma. I have basic knowledge of Science and technology.
+        </div>
+
+        <div class="social">
+            <a href="https://www.facebook.com/share/1BuUifGyoU/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://instagram.com/diyansharma2799" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/9779849474640" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+
+    </div>
+</div>
+
+<button class="help-btn" onclick="location.href='chat.html'">💬 HELP</button>
+
+<script>
+/* 🔥 NO WHITE SCREEN SAFETY */
+document.body.style.background = "#030303";
+
+/* FIREBASE SAFE INIT */
+const firebaseConfig = {
+    apiKey: "AIzaSyBxCJJLsZQtlwPyWgvl2dO25-eSpOYEg", // ⚠️ Double-check this in your Firebase console — real keys are 39 characters, this looks short and may not connect
+    authDomain: "ff-tournament-app-abcf0.firebaseapp.com",
+    databaseURL: "https://ff-tournament-app-abcf0-default-rtdb.firebaseio.com",
+    projectId: "ff-tournament-app-abcf0"
+};
+
+const statusLabel = document.getElementById("statusLabel");
+const frameStatus = document.getElementById("frameStatus");
+
+function setStatus(isOnline) {
+    document.body.classList.remove("online", "offline");
+    document.body.classList.add(isOnline ? "online" : "offline");
+    statusLabel.innerText = isOnline ? "ONLINE" : "OFFLINE";
+    if (frameStatus) frameStatus.title = isOnline ? "Online now" : "Offline";
+}
+
+try {
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    db.ref("status").on("value", snap => {
+        const val = snap.val() || "offline";
+        setStatus(val === "online");
+    }, error => {
+        console.error("Firebase read error:", error);
+        setStatus(false);
+    });
+} catch (err) {
+    console.error("Firebase init error:", err);
+    setStatus(false);
+}
+
+/* MUSIC */
+const music = document.getElementById("music");
+const musicBar = document.getElementById("musicBar");
+const musicLabel = document.getElementById("musicLabel");
+let playing = false;
+
+function hasTrack() {
+    return !!(music.querySelector("source") || music.getAttribute("src"));
+}
+
+function toggleMusic() {
+    if (!hasTrack()) {
+        const original = musicLabel.innerText;
+        musicLabel.innerText = "No track set";
+        setTimeout(() => musicLabel.innerText = original, 1500);
+        return;
+    }
+    if (playing) {
+        music.pause();
+        music.currentTime = 0;
+        playing = false;
+        musicBar.classList.remove("playing");
+        musicLabel.innerText = "MUSIC";
+    } else {
+        music.play().then(() => {
+            playing = true;
+            musicBar.classList.add("playing");
+            musicLabel.innerText = "PLAYING";
+        }).catch(err => {
+            console.error("Music Error:", err);
+            musicLabel.innerText = "Tap failed";
+            setTimeout(() => musicLabel.innerText = "MUSIC", 1500);
+        });
+    }
+}
+
+music.addEventListener("ended", () => {
+    playing = false;
+    musicBar.classList.remove("playing");
+    musicLabel.innerText = "MUSIC";
+});
+
+/* POPUP */
+document.querySelector(".profile-frame").onclick = () => {
+    const p = document.getElementById("popup");
+    p.classList.add("show");
+    setTimeout(() => p.classList.remove("show"), 2000);
+};
+</script>
+</body>
+</html>
